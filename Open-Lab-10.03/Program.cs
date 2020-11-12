@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +13,9 @@ namespace Open_Lab_10._01
     {
         static void Main(string[] args)
         {
-            Book LOTR = new Book();
-            LOTR.SetTitle("Creative name of book");
-            LOTR.SetPages(100);
-            LOTR.SetCategory("encyclopedia");
-            LOTR.SetAuthor("Jaro");
-            LOTR.SetReleaseDate("7.11.2020");
-            LOTR.GetBook();
+            Book LOTR = new Book("Creative name of book", -100, "encyclopedia", "Jaro", 2020);
+
+            Console.WriteLine(LOTR.Title + ", " + LOTR.Pages + ", " + LOTR.Category + ", " + LOTR.Author + ", " + LOTR.ReleaseDate);
             Console.ReadKey();
         }
     }
@@ -28,30 +25,57 @@ namespace Open_Lab_10._01
         private int pages;
         private string category;
         private string author;
-        private string releaseDate;
-        public void SetTitle(string str)
+        private int releaseDate;
+        public Book(string title,int pages, string category, string author, int releaseDate)
         {
-            this.title = str;
+            Title = title;
+            Pages = pages;
+            Category = category;
+            Author = author;
+            ReleaseDate = releaseDate;
         }
-        public void SetPages(int i)
+        public string Title
         {
-            this.pages = i;
+            get;
+            set; 
         }
-        public void SetCategory(string str)
+
+        public int Pages
         {
-            this.category = str;
+            get => this.pages;
+            set
+            {
+                this.pages = value;
+                if (this.pages < 0)
+                {
+                    this.pages = 1;
+                }
+            }
         }
-        public void SetAuthor(string str)
+
+        public string Category
         {
-            this.author = str;
+            get;
+            set;
         }
-        public void SetReleaseDate(string str)
+
+        public string Author
         {
-            this.releaseDate = str;
+            get;
+            set;
         }
-        public void GetBook()
+
+        public int ReleaseDate 
         {
-            Console.WriteLine(String.Format($"Book \"{ title}\" has {pages} pages, it is {category} by {author} and it was released {releaseDate}."));
+            get => this.releaseDate;
+            set
+            {
+                this.releaseDate = value;
+                if ((this.releaseDate > 2021) || (this.releaseDate < 1450))
+                {
+                    this.releaseDate = -1;
+                }
+            }
         }
     }
 }
